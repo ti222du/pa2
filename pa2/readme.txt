@@ -10,5 +10,5 @@ pip install mysql-connector-python
 pip install msvcrt
 
 
-
-
+When the libraries are installed run 'main.py'
+(If it does not work because a csv file doesn't exist it is because the wrong folder is selected in Visual studio code)
