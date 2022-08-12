@@ -155,20 +155,13 @@ except mysql.connector.Error as err:
         query2 = "CREATE VIEW overview as SELECT {} FROM series LEFT JOIN test ON test.series=series.name;".format(text)
         cursor.execute(query2)
 
-        # query = "CREATE VIEW overview as SELECT series.name, series.seasons_watched, has_series.platform, has_series.seasons_on_platform FROM series JOIN has_series ON series.name=has_series.series WHERE has_series.platform IN (SELECT platform FROM streamingsites WHERE owned_by_user='yes') ORDER BY has_series.platform ASC"
-        # cursor.execute(query)
-
     except mysql.connector.Error as err:
         print("Failed to create database {}".format(err))
         exit(1)
 
-# Function for adding more series to the database
 
 
-def add_new_series():
-    None
-
-
+# function for adding a streaming site to the database
 def add_new_streamingsite(input_platform="", input_price="", owned_by_user=""):
     if input_platform == "":
         input_platform = input("What is the name of the platform? ")
@@ -180,7 +173,7 @@ def add_new_streamingsite(input_platform="", input_price="", owned_by_user=""):
     cursor.execute(query)
 
 
-# Loop where the user can press different buttonss
+# Loop where the user can press different buttons
 # and choose what informations to see
 
 while True:
@@ -292,8 +285,6 @@ while True:
 
     elif user_input == "5":
 
-        # Since the number of seasons watched will be zero
-        # if the user hasn't seen a TV-series
         query = "SELECT series.name, series.score, has_series.platform FROM series LEFT JOIN has_series ON series.name = has_series.series ORDER BY score DESC LIMIT 5;"
         cursor.execute(query)
         print("\nList of your most liked TV-series:\n")
@@ -415,8 +406,7 @@ while True:
                     for num in cursor:
                         if num[0] >= 1:
                             print("It is in the database")
-                            # add_new_streamingsite(input_platform,)
-                            # None
+
                             input_seasons_on_platform = input("How many seasons are available there? ")
                             query = "INSERT INTO has_series VALUES ('{}', '{}','{}');".format(input_platform, input_name, input_seasons_on_platform)
                             cursor.execute(query)
@@ -427,10 +417,6 @@ while True:
                             input_seasons_on_platform = input("How many seasons are available there? ")
                             query = "INSERT INTO has_series VALUES ('{}', '{}','{}');".format(input_platform, input_name, input_seasons_on_platform)
                             cursor.execute(query)  
-                    # if input_platform == "":
-                    #     None
-                    # else:
-                    #     input_seasons_on_platform = input("How many seasons are available there? ")
 
         if user_input == "2":
             all_streamingsites = []
